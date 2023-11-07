@@ -1,8 +1,9 @@
 # This Python file uses the following encoding: utf-8
 
 import random
+import Adafruit_DHT as dht
 
-from PyQt6 import QtCore
+from PyQt5 import QtCore
 
 import event_constants
 
@@ -16,12 +17,16 @@ class TemperatureState(AlarmClockState):
         self.timer.timeout.connect(self.set_temperature)
 
         self.stream_mode = False
-        self.temp_stream_period = 2500
+        self.temp_stream_period = 1000
+        self.sensor = dht.DHT22
+        self.sensor_input_pin = 4
 
     def start(self):
         super().clear_screen()
         super().headings[0].setText('TEMP')
+        super().headings[1].setText('HDTY')
         super().separators[0].setText('.')
+        super().separators[2].setText('.')
 
         self.set_temperature()
 
@@ -30,14 +35,32 @@ class TemperatureState(AlarmClockState):
         self.stream_mode = False
 
     def set_temperature(self):
-        temp = str(round(random.uniform(0, 100), 5))
+        try:
+            temp, humidity = dht.read_retry(
+                self.sensor, self.sensor_input_pin
+            )
+        except Exception as e:
+            print(e)
 
+            return
+ 
+        print(temp, humidity)
+ 
+        temp = str(temp)
         whole, decimal = temp.split('.')
         whole = whole.zfill(2)
         decimal = decimal[:2].ljust(2, '0')
 
         super().text_boxes[0].setText(whole)
         super().text_boxes[1].setText(decimal[:2])
+        
+        humidity = str(humidity)
+        whole, decimal = humidity.split('.')
+        whole = whole.zfill(2)
+        decimal = decimal[:2].ljust(2, '0')
+
+        super().text_boxes[3].setText(whole)
+        super().text_boxes[4].setText(decimal[:2])
 
     def next_state(self, event_id):
         if (event_id == event_constants.INPUT_EVENT):

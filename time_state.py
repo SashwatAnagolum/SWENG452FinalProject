@@ -2,7 +2,7 @@
 
 import datetime
 
-from PySide6 import QtCore
+from PyQt6 import QtCore
 
 import event_constants
 

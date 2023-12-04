@@ -2,10 +2,8 @@
 
 import abc
 import datetime
-import os
 
 from threading import Lock
-from just_playback import Playback
 
 from PySide6.QtCore import QThread
 

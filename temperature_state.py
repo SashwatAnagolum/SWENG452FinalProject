@@ -1,9 +1,9 @@
 # This Python file uses the following encoding: utf-8
 
 import random
-import Adafruit_DHT as dht
+# import Adafruit_DHT as dht
 
-from PyQt5 import QtCore
+from PySide6.QtCore import QTimer
 
 import event_constants
 
@@ -13,13 +13,13 @@ class TemperatureState(AlarmClockState):
     def __init__(self):
         super().__init__()
 
-        self.timer = QtCore.QTimer()
+        self.timer = QTimer()
         self.timer.timeout.connect(self.set_temperature)
 
         self.stream_mode = False
         self.temp_stream_period = 1000
-        self.sensor = dht.DHT22
-        self.sensor_input_pin = 4
+        # self.sensor = dht.DHT22
+        # self.sensor_input_pin = 4
 
     def start(self):
         super().clear_screen()
@@ -35,16 +35,17 @@ class TemperatureState(AlarmClockState):
         self.stream_mode = False
 
     def set_temperature(self):
-        try:
-            temp, humidity = dht.read_retry(
-                self.sensor, self.sensor_input_pin
-            )
-        except Exception as e:
-            print(e)
+        # try:
+        #     temp, humidity = dht.read_retry(
+        #         self.sensor, self.sensor_input_pin
+        #     )
+        # except Exception as e:
+        #     print(e)
 
-            return
+        #     return
  
-        print(temp, humidity)
+        temp = random.uniform(75, 90)
+        humidity = random.uniform(20, 30)           
  
         temp = str(temp)
         whole, decimal = temp.split('.')

@@ -2,53 +2,60 @@
 
 import datetime
 
-from PyQt5 import QtCore
+from PySide6.QtCore import QTimer
 
-import event_constants
+from time_input_state import TimeInputState
 
-from alarm_clock_state import AlarmClockState
-
-class TimeState(AlarmClockState):
+class TimeState(TimeInputState):
     def __init__(self):
-        super().__init__()
+        super().__init__('EDIT')
 
-        self.timer = QtCore.QTimer()
+        self.timer = QTimer()
         self.timer.timeout.connect(self.set_time)
+    
+    def handle_input_event(self):
+        super().handle_input_event()
 
-    def next_state(self, event_id):
-        if (event_id == event_constants.POWER_EVENT):
-            self.exit()
-            super().off_state.start()
+        if self.editing: 
+            self.timer.stop()
 
-            return super().off_state
-        elif (event_id == event_constants.MODE_EVENT):
-            self.exit()
-            super().temperature_state.start()
+    def handle_input_select_event(self):
+        if self.editing:
+            super().handle_input_select_event()
+            super().set_timing_wheel_values(self.new_time_values)
 
-            return super().temperature_state
-        else:
-            return self
+            if self.edit_index == 0:
+                self.set_time()
+                self.timer.start(500)                
 
+    def handle_mode_event(self):
+        self.exit()
+        super().temperature_state.start()
+
+        return super().temperature_state
 
     def set_time(self):
-        super().text_boxes[0].setText(
-            str(datetime.datetime.now().hour)
-        )
+        with super().time_values_lock:
+            super().text_boxes[0].setText(
+                super().current_time_values[0]
+            )
 
-        super().text_boxes[1].setText(
-            str(datetime.datetime.now().minute)
-        )
+            super().text_boxes[1].setText(
+                super().current_time_values[1]
+            )
 
-        super().text_boxes[2].setText(
-            str(datetime.datetime.now().second)
-        )
+            super().text_boxes[2].setText(
+                super().current_time_values[2]
+            )     
 
     def start(self):
         super().clear_screen()
         super().headings[0].setText('TIME')
+        super().headings[1].setText('VIEW')
 
         self.set_time()
         self.timer.start(500)
 
     def exit(self):
+        super().exit()
         self.timer.stop()

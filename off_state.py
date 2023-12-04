@@ -20,8 +20,6 @@ class OffState(AlarmClockState):
             self.exit()
             super().time_state.start()
 
-            print(super().time_state)
-
             return super().time_state
         else:
             return self

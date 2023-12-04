@@ -5,12 +5,11 @@
 #     pyside6-uic form.ui -o ui_form.py, or
 #     pyside2-uic form.ui -o ui_form.py
 
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow
 
 import event_constants
 
 from ui_form import Ui_MainWindow
-
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -53,3 +52,6 @@ class MainWindow(QMainWindow):
 
     def button3_pressed(self, args):
         self.event_handler.handle_event(event_constants.MODE_EVENT)
+
+    def button4_pressed(self, args):
+        self.event_handler.handle_event(event_constants.INPUT_SELECT_EVENT)

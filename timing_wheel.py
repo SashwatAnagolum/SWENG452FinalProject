@@ -2,11 +2,11 @@
 
 from threading import Lock
 
-from PySide6.QtCore import QObject, Signal
+from PyQt5.QtCore import QObject, pyqtSignal
 
 class TimingWheel(QObject):
-    time_incremented = Signal(str)
-    timeout_signal = Signal()
+    time_incremented = pyqtSignal(str)
+    timeout_signal = pyqtSignal()
 
     def __init__(self, num_slots, resolution_in_secs, lock):
         super().__init__()

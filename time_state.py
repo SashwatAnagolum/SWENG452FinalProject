@@ -2,7 +2,7 @@
 
 import datetime
 
-from PySide6.QtCore import QTimer
+from PyQt5.QtCore import QTimer
 
 from time_input_state import TimeInputState
 

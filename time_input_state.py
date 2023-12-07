@@ -2,7 +2,7 @@
 
 from abc import abstractmethod
 
-from PySide6.QtCore import QTimer
+from PyQt5.QtCore import QTimer
 
 import event_constants
 

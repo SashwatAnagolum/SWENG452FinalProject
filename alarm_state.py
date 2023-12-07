@@ -3,9 +3,6 @@
 import heapq
 import os
 
-from PySide6.QtMultimedia import QSoundEffect
-from PySide6.QtCore import QUrl
-
 import event_constants
 
 from alarm_clock_state import AlarmClockState
@@ -16,9 +13,9 @@ class AlarmState(TimeInputState):
         super().__init__('ADD')
 
         self.alarm_times = []
-        self.alarm_sound = QSoundEffect()
-        self.alarm_sound.setSource(QUrl.fromLocalFile('./assets/alarm.mp3'))
-        self.alarm_sound.setLoopCount(1)
+        # self.alarm_sound = QSoundEffect()
+        # self.alarm_sound.setSource(QUrl.fromLocalFile('./assets/alarm.mp3'))
+        # self.alarm_sound.setLoopCount(1)
 
         self.is_active = False
 
@@ -86,6 +83,6 @@ class AlarmState(TimeInputState):
             self.show_alarm()
 
     def notify_alarm_expiry(self):
-        self.alarm_sound.play()
+        # self.alarm_sound.play()
 
         self.pop_alarm()

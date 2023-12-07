@@ -5,7 +5,7 @@ import datetime
 
 from threading import Lock
 
-from PySide6.QtCore import QThread
+from PyQt5.QtCore import QThread
 
 from heirarchial_timing_wheel import HeirarchicalTimingWheel
 from simple_timing_wheel import SimpleTimingWheel

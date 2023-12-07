@@ -1,6 +1,6 @@
 # This Python file uses the following encoding: utf-8
 
-from PySide6.QtCore import QTimer
+from PyQt5.QtCore import QTimer
 
 from timing_wheel import TimingWheel
 

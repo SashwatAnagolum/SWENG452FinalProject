@@ -1,6 +1,8 @@
 # This Python file uses the following encoding: utf-8
 
 import random
+import atexit
+
 # import Adafruit_DHT as dht
 
 from PyQt5.QtCore import QTimer
@@ -8,6 +10,7 @@ from PyQt5.QtCore import QTimer
 import event_constants
 
 from alarm_clock_state import AlarmClockState
+
 
 class TemperatureState(AlarmClockState):
     def __init__(self):
@@ -20,6 +23,11 @@ class TemperatureState(AlarmClockState):
         self.temp_stream_period = 1000
         # self.sensor = dht.DHT22
         # self.sensor_input_pin = 4
+
+        atexit.register(self.on_termination)
+
+    def on_termination(self):
+        self.timer.stop()
 
     def start(self):
         super().clear_screen()

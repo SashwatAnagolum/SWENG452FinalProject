@@ -8,6 +8,7 @@ import event_constants
 from alarm_clock_state import AlarmClockState
 from time_input_state import TimeInputState
 
+
 class AlarmState(TimeInputState):
     def __init__(self):
         super().__init__('ADD')

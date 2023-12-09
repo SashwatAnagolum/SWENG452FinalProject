@@ -10,6 +10,7 @@ from PyQt5.QtCore import QThread
 from heirarchial_timing_wheel import HeirarchicalTimingWheel
 from simple_timing_wheel import SimpleTimingWheel
 
+
 class AlarmClockState(abc.ABC):
     text_boxes = None
     separators = None

@@ -1,10 +1,12 @@
 # This Python file uses the following encoding: utf-8
 
 import datetime
+import atexit
 
 from PyQt5.QtCore import QTimer
 
 from time_input_state import TimeInputState
+
 
 class TimeState(TimeInputState):
     def __init__(self):
@@ -12,7 +14,12 @@ class TimeState(TimeInputState):
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.set_time)
-    
+
+        atexit.register(self.on_termination)
+
+    def on_termination(self):
+        self.timer.stop()
+
     def handle_input_event(self):
         super().handle_input_event()
 

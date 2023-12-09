@@ -1,5 +1,7 @@
 # This Python file uses the following encoding: utf-8
 
+import atexit
+
 from abc import abstractmethod
 
 from PyQt5.QtCore import QTimer
@@ -7,6 +9,7 @@ from PyQt5.QtCore import QTimer
 import event_constants
 
 from alarm_clock_state import AlarmClockState
+
 
 class TimeInputState(AlarmClockState):
     def __init__(self, editing_text):
@@ -20,6 +23,11 @@ class TimeInputState(AlarmClockState):
         self.max_values = [24, 60, 60]
         self.is_blinking = False
         self.editing_text = editing_text
+
+        atexit.register(self.on_termination)
+
+    def on_termination(self):
+        self.editing_timer.stop()
 
     def handle_input_event(self):
         if not self.editing:

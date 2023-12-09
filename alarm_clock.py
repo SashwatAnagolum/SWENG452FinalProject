@@ -6,6 +6,7 @@ from temperature_state import TemperatureState
 from alarm_state import AlarmState
 from off_state import OffState
 
+
 class AlarmClock:
     def __init__(self, main_window):
         self.main_window = main_window

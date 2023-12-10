@@ -3,7 +3,7 @@
 import random
 import atexit
 
-# import Adafruit_DHT as dht
+import Adafruit_DHT as dht
 
 from PyQt5.QtCore import QTimer
 
@@ -21,8 +21,8 @@ class TemperatureState(AlarmClockState):
 
         self.stream_mode = False
         self.temp_stream_period = 1000
-        # self.sensor = dht.DHT22
-        # self.sensor_input_pin = 4
+        self.sensor = dht.DHT22
+        self.sensor_input_pin = 4
 
         atexit.register(self.on_termination)
 
@@ -43,17 +43,17 @@ class TemperatureState(AlarmClockState):
         self.stream_mode = False
 
     def set_temperature(self):
-        # try:
-        #     temp, humidity = dht.read_retry(
-        #         self.sensor, self.sensor_input_pin
-        #     )
-        # except Exception as e:
-        #     print(e)
+        try:
+            temp, humidity = dht.read_retry(
+                self.sensor, self.sensor_input_pin
+            )
+        except Exception as e:
+            print(e)
 
-        #     return
+            return
  
-        temp = random.uniform(75, 90)
-        humidity = random.uniform(20, 30)           
+        # temp = random.uniform(75, 90)
+        # humidity = random.uniform(20, 30)           
  
         temp = str(temp)
         whole, decimal = temp.split('.')

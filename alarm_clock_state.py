@@ -119,8 +119,6 @@ class AlarmClockState(abc.ABC):
 
     @staticmethod
     def play_alarm_expiry_tone():
-        # pb = Playback(os.path.dirname(__file__) + '/assets/alarm.mp3')
-        # pb.play()
         AlarmClockState.alarm_state.notify_alarm_expiry()
 
     @abc.abstractmethod
